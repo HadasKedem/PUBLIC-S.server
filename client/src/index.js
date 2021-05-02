@@ -19,8 +19,7 @@ AxiosInstance.defaults.baseURL = getBaseUrl();
 function getBaseUrl() {
   let currentEnvUrl = window.location.origin
   let urlDic = {
-    "http://localhost:3000": "http://localhost:8080/api/",
-    "https://oggyclient.azurewebsites.net": "https://oggyserver.azurewebsites.net/api/"
+
   }
 
   return urlDic[currentEnvUrl];
