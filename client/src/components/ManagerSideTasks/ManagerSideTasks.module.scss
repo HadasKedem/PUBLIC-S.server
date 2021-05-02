@@ -1,0 +1,13 @@
+.CardList {
+    list-style: none;
+    overflow: auto;
+    padding: 0;
+  
+    & > *:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }

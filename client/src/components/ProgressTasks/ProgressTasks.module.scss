@@ -1,0 +1,26 @@
+.rowC{
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+}
+
+
+h1{
+    display: contents;
+}
+
+// .marginRight {
+//     margin-right: 50%;
+// }
+.missionscard{
+    background: white;
+    //padding: 10px;
+
+}
+
+.status{
+    justify-self: center;
+}
+
+.ProgressValue{
+    justify-self: center;
+}

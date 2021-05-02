@@ -1,0 +1,26 @@
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.CardList {
+  list-style: none;
+  overflow: auto;
+  padding: 0;
+
+  & > *:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.Board {
+  display: flex;
+  background: white;
+  box-shadow: 0px 0px 2px 0px #3f51b5;
+  margin-bottom: 45px;
+}

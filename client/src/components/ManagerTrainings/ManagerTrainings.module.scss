@@ -1,0 +1,20 @@
+
+.CardList {
+  list-style: none;
+  overflow: auto;
+  padding: 0;
+  & > *:not(:last-child) {
+    margin-bottom: 20px;}
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.Toggels{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around ;
+}
+
+.Border{
+  border-style: solid;
+}
