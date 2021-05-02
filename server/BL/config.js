@@ -11,10 +11,7 @@
 
 
 module.exports = {
-    'secret': 'supersecret',
-    'captainUpApiKey': '5fab9f52a39ad7174326f8c9',
-    'captainUpSecret': '65549a9afdf52f3762b7059f760952886973f227856351172bc80a9e64663e86',
-    'captainUpUrlBase': 'https://captainup.com/mechanics/v2',
+ 
     // OBSELETE
     // 'userNamesEncKey': userNamesEncKey,
     // 'iv': iv,
