@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // Connection URI
 
 // Dev (serverfull)
-let url = process.env.MONGO_CONNECT
+let url = "mongodb+srv://newsdb:newsdb@news.j4xay.mongodb.net/NEWS?retryWrites=true&w=majority";
 
 
 mongoose
