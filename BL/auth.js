@@ -21,14 +21,14 @@ module.exports.verify = verify
 module.exports.login = async (req, res, next) => {
     let user = await tryToLogin(req.body.username, req.body.password)
     if (!user) {
-        return res.json("failed");
+        return res.json("Authentication failed");
     }
 
     try {
         let token = createToken(user);
         return res.json(token);
     } catch (error) {
-        return res.json("failed");
+        return res.json("Authentication failed");
     }
 }
 

@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const jwt = require('jsonwebtoken');
-const auth = require('./BL/auth');
+// const auth = require('./BL/auth');
 const config = require('./BL/config');
 
 // DB connection.
@@ -35,13 +35,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Login.
-app.post('/api/users/login', auth.login)
+// app.post('/api/users/login', auth.login)
 
 // Refresh token
-app.use('/api/users/refreshToken', auth.refreshToken)
+// app.use('/api/users/refreshToken', auth.refreshToken)
 
 // Auth
-app.use(auth.auth)
+// app.use(auth.auth)
 
 
 const router = require('./routers.route')
