@@ -36,7 +36,7 @@ export abstract class AbstractController {
             if (err) {
                 return res.status(400).json({error: err.reason.message})
             } else if (!artifact) {
-                return res.status(404).json({error: "Not found article " + req.params["_id"]})
+                return res.status(404).json({error: "Not found"  + this.modelName + " with id: " + req.params["_id"]})
             } else {
                 return res.status(200).json(artifact)
             }
@@ -68,7 +68,7 @@ export abstract class AbstractController {
             if(err) {
                 return res.status(400).json({error: err.reason.message})
             } else if(!doc.nModified) {
-                return res.status(404).json({error: "Not found article " + req.params["_id"]})
+                return res.status(404).json({error: "Not found " + this.modelName + " with id: " + req.params["_id"]})
             } else {
                 return res.status(204).send()
             }
