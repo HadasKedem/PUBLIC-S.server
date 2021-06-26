@@ -48,16 +48,21 @@ var express = require('express');
 const router = express.Router();
 router.get('/helloWorld', function (req, res) {
     res.send("I am alive!")
-} )
+})
 
-var webScrapper = require('./BL/WebScraper')
-router.get('/scraper',function (req, res) {
-    webScrapper.connectToJPost().then(function (result) {
-        res.send(result)
-    }).catch(function (error) {
-        res.status = 400;
-        res.send("error in scrapper " + error);
-    })
+//let webScrapper = require('./BL/WebScraper')
+let breakingNewsModel = require("./models/BreakingNews")
+router.get('/breakingNews',async function (req, res) {
+
+    try {
+        res.json({breakingNews: await breakingNewsModel.find().exec()})
+
+    } catch (e) {
+        res.send({
+            message:"failed to fetch breaking news",
+            exception: e.toString()
+        })
+    }
 })
 
 module.exports = router;

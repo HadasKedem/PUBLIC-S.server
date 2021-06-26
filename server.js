@@ -52,10 +52,19 @@ app.use((req, res, next) => {
     res.status(404).send();
 });
 
+// fetch breaking news every 6 hours
+const schedule = require('node-schedule');
+const scrapBreakingNews = require("./BL/WebScraper")
+const job = schedule.scheduleJob('* 0,6,12,24 * * *', function(){
+    scrapBreakingNews.fetchBreakingNews().then(news => {
+        news.save()
+    })
+});
+
 process.env.TZ = "Asia/Jerusalem";
 
-// Select port using env or default 8080.
-const httpPort = process.env.HTTP_PORT || 8080;
+// Select port using env or default 80.
+const httpPort = process.env.HTTP_PORT || 80;
 http.createServer(app).listen(httpPort);
 console.log("http Server is live and running at port: " + httpPort);
 
