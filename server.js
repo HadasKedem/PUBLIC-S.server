@@ -63,8 +63,8 @@ const job = schedule.scheduleJob('* 0,6,12,24 * * *', function(){
 
 process.env.TZ = "Asia/Jerusalem";
 
-// Select port using env or default 80.
-const httpPort = process.env.HTTP_PORT || 80;
+// Select port using env or default 8080.
+const httpPort = process.env.HTTP_PORT || 8080;
 http.createServer(app).listen(httpPort);
 console.log("http Server is live and running at port: " + httpPort);
 
