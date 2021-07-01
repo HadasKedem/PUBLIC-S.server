@@ -1,6 +1,5 @@
 // Server defaults
 import {connectToJPost} from "./scrapping/WebScrapper";
-import {Scheduler} from "./scheduler/Scheduler";
 import {handlePull} from "./scrapping/HandlePull";
 import {ScrappingController} from "./controllers/ScrappingController";
 import {ArtifactController} from "./controllers/ArtifactController";
@@ -10,6 +9,7 @@ const express = require('express');
 const http = require('http');
 const app = express();
 const cors = require('cors');
+const scheduler = require("node-schedule")
 require('jsonwebtoken');
 // const auth = require('./BL/auth');
 
@@ -34,4 +34,4 @@ process.env.TZ = "Asia/Jerusalem";
 const httpPort = process.env.HTTP_PORT || 8080;
 http.createServer(app).listen(httpPort);
 console.log("http Server is live and running at port: " + httpPort);
-new Scheduler(() => connectToJPost().then(value => handlePull(value)), "* * * * *").run()
+scheduler.scheduleJob("* * * * *", () => connectToJPost().then(value => handlePull(value)))
