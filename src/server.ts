@@ -1,4 +1,10 @@
 // Server defaults
+import {connectToJPost} from "./scrapping/WebScrapper";
+import {Scheduler} from "./scheduler/Scheduler";
+import {handlePull} from "./scrapping/HandlePull";
+import {ScrappingController} from "./controllers/ScrappingController";
+import {ArtifactController} from "./controllers/ArtifactController";
+
 const bodyParser = require('body-parser');
 const express = require('express');
 const http = require('http');
@@ -6,9 +12,6 @@ const app = express();
 const cors = require('cors');
 require('jsonwebtoken');
 // const auth = require('./BL/auth');
-
-// Controllers
-const ArtifactController = require("./controllers/ArtifactController");
 
 app.use(cors({ origin: ["http://localhost:3000", 'https://oggyclient.azurewebsites.net'], exposedHeaders: 'Authorization' }));
 app.options('**', cors());
@@ -22,8 +25,8 @@ app.use(express.static(__dirname + '/dist/'))
 app.use(express.urlencoded({ extended: true }));
 
 
-const c_artifact = new ArtifactController.ArtifactController()
-app.all('**', c_artifact.createRouter())
+app.all('**', new ArtifactController().createRouter())
+app.all('**', new ScrappingController().createRouter())
 
 process.env.TZ = "Asia/Jerusalem";
 
@@ -31,5 +34,4 @@ process.env.TZ = "Asia/Jerusalem";
 const httpPort = process.env.HTTP_PORT || 8080;
 http.createServer(app).listen(httpPort);
 console.log("http Server is live and running at port: " + httpPort);
-
-module.exports = app;
+new Scheduler(() => connectToJPost().then(value => handlePull(value)), "* * * * *").run()
