@@ -1,5 +1,4 @@
 import {db} from "../DAL/database";
-import {UsersController} from "../controllers/UsersController";
 const validator = require('validator');
 const bcrypt = require("bcrypt");
 const HASH_ROUNDS = 10;
@@ -39,11 +38,13 @@ usersSchema.pre('save', async function (next: HookNextFunction) {
     }
 });
 
-usersSchema.methods.validatePassword = async function (pass: string) {
+usersSchema.methods.comparePassword = function(candidatePassword, cb) {
     const thisObj : any = this;
-    return bcrypt.compare(pass, thisObj);
+    bcrypt.compare(candidatePassword, thisObj.password, function(err:any, isMatch:any) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
 };
-
 
 // Omit the password when returning a user
 usersSchema.set('toJSON', {
@@ -52,6 +53,5 @@ usersSchema.set('toJSON', {
         return ret;
     }
 });
-
 
 export const model = db.model("Users", usersSchema);
