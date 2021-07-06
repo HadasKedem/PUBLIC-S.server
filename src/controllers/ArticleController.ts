@@ -1,7 +1,7 @@
 import {AbstractController} from "./AbstractController";
 import {model} from "../models/Article"
 
-export class ArtifactController extends AbstractController {
+export class ArticleController extends AbstractController {
     public constructor() {
         super("Article", model )
     }
