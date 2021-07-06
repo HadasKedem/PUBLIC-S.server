@@ -22,33 +22,33 @@ export abstract class AbstractController {
     }
 
     public getAll = async (req:any , res: any) => {
-        await this.model.find({}, (err, artifacts) => {
+        await this.model.find({}, (err, Articles) => {
             if (err) {
                 return res.status(400).json({error: err.error})
             } else {
-                return res.status(200).json(artifacts)
+                return res.status(200).json(Articles)
             }
         })
     }
 
     public getOne = async (req: any, res: any) => {
-        await this.model.findOne({_id: req.params["_id"]}, (err: any, artifact:any) => {
+        await this.model.findOne({_id: req.params["_id"]}, (err: any, Article:any) => {
             if (err) {
                 return res.status(400).json({error: err.reason.message})
-            } else if (!artifact) {
+            } else if (!Article) {
                 return res.status(404).json({error: "Not found"  + this.modelName + " with id: " + req.params["_id"]})
             } else {
-                return res.status(200).json(artifact)
+                return res.status(200).json(Article)
             }
         })
     }
 
     public create = async (req: any, res: any) => {
-        await this.model.create(req.body, (err, artifact) => {
+        await this.model.create(req.body, (err, Article) => {
             if(err) {
                 return res.status(400).json({error: err.message})
             } else {
-                return res.status(201).json(artifact)
+                return res.status(201).json(Article)
             }
         })
     }

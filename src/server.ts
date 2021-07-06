@@ -2,7 +2,7 @@
 import {connectToJPost} from "./scrapping/WebScrapper";
 import {handlePull} from "./scrapping/HandlePull";
 import {ScrappingController} from "./controllers/ScrappingController";
-import {ArtifactController} from "./controllers/ArticleController";
+import {ArticleController} from "./controllers/ArticleController";
 
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -25,7 +25,7 @@ app.use(express.static(__dirname + '/dist/'))
 app.use(express.urlencoded({ extended: true }));
 
 
-app.all('**', new ArtifactController().createRouter())
+app.all('**', new ArticleController().createRouter())
 app.all('**', new ScrappingController().createRouter())
 
 process.env.TZ = "Asia/Jerusalem";
