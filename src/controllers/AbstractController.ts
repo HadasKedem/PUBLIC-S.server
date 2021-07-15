@@ -15,7 +15,7 @@ export abstract class AbstractController {
         this.model = model
     }
 
-    public createRouter = (): Router => {
+    public createRouter() : Router  {
         let rootPath = "/" + this.modelName
         let router = Router()
         router.get(rootPath, this.getAll)
