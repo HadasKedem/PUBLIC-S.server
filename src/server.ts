@@ -22,7 +22,9 @@ app.use(express.static(__dirname + '/dist/'))
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
-app.all('**', new ArtifactController().createRouter())
+let artifactController = new ArtifactController();
+app.all('**', artifactController.createRouter())
+artifactController.startWebSocket(Number(process.env.ARTIFACT_WEBSOCKET_PORT) || 14000)
 app.all('**', new ScrappingController().createRouter())
 app.all('**', new UsersController().createRouter())
 
