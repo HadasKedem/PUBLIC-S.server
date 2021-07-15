@@ -5,7 +5,7 @@ import integer = Protocol.integer;
 
 const WebSocket = require("ws")
 export abstract class AbstractController {
-    private model:mongoose.Model<any>;
+    protected model:mongoose.Model<any>;
     private wss: any = null
     private clients = new Set()
 
