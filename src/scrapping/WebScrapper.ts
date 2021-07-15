@@ -22,6 +22,12 @@ export function connectToJPost() : Promise<{ content: string, author: string, da
                         };
                         newsJson.content = item[1].children[0]["data"];
                         newsJson.author = item[3].children[1].children[0]["data"].replace("By ", "");
+                        if ("data" in item[3].children[1].children[0]) {
+                            newsJson.author = item[3].children[1].children[0]["data"].replace("By ", "");
+                        } else {
+                            // @ts-ignore
+                            newsJson.author = "JERUSALEM POST";
+                        }
                         newsJson.date = item[3].children[3].children[0]["data"];
                         return newsJson
                     })
