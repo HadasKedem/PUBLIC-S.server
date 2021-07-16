@@ -2,7 +2,7 @@
 import {connectToJPost} from "./scrapping/WebScrapper";
 import {handlePull} from "./scrapping/HandlePull";
 import {ScrappingController} from "./controllers/ScrappingController";
-import {ArticleController} from "./controllers/ArticleController";
+import {ArtifactController} from "./controllers/ArtifactController";
 import {UsersController} from "./controllers/UsersController";
 
 const bodyParser = require('body-parser');
