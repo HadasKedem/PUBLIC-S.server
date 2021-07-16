@@ -22,10 +22,12 @@ app.use(express.static(__dirname + '/dist/'))
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
-
-app.all('**', new ArticleController().createRouter())
+let articleController = new ArticleController();
+app.all('**', articleController.createRouter())
+articleController.startWebSocket(Number(process.env.ARTICLE_WEBSOCKET_PORT) || 14000)
 app.all('**', new ScrappingController().createRouter())
 app.all('**', new UsersController().createRouter())
+
 
 
 process.env.TZ = "Asia/Jerusalem";
