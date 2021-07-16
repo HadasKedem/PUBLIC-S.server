@@ -24,11 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 
 let articleController = new ArticleController();
 app.all('**', articleController.createRouter())
-articleController.startWebSocket(Number(process.env.ARTICLE_WEBSOCKET_PORT) || 14000)
 app.all('**', new ScrappingController().createRouter())
 app.all('**', new UsersController().createRouter())
-
-
+articleController.startWebSocket(Number(process.env.ARTICLE_WEBSOCKET_PORT) || 14000)
 
 process.env.TZ = "Asia/Jerusalem";
 
