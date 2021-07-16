@@ -27,7 +27,13 @@ export abstract class AbstractController {
     }
 
     public getAll = async (req:any , res: any) => {
-        await this.model.find({}, (err, artifacts) => {
+        let searchQuery = {}
+        if (req.query.q) {
+            searchQuery = {
+                $text: { $search: req.query.q }
+            }
+        }
+        await this.model.find(searchQuery, (err, artifacts) => {
             if (err) {
                 return res.status(400).json({error: err.error})
             } else {
