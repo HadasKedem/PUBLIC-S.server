@@ -2,7 +2,7 @@
 import {connectToJPost} from "./scrapping/WebScrapper";
 import {handlePull} from "./scrapping/HandlePull";
 import {ScrappingController} from "./controllers/ScrappingController";
-import {ArticleController} from "./controllers/ArticleController";
+import {ArtifactController} from "./controllers/ArtifactController";
 import {UsersController} from "./controllers/UsersController";
 
 const bodyParser = require('body-parser');
@@ -22,8 +22,9 @@ app.use(express.static(__dirname + '/dist/'))
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
-
-app.all('**', new ArticleController().createRouter())
+let artifactController = new ArtifactController();
+app.all('**', artifactController.createRouter())
+artifactController.startWebSocket(Number(process.env.ARTIFACT_WEBSOCKET_PORT) || 14000)
 app.all('**', new ScrappingController().createRouter())
 app.all('**', new UsersController().createRouter())
 
