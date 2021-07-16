@@ -5,13 +5,10 @@ const mongoose = require('mongoose'),
 
 // WIP
 // AKA action
-const ArticleSchema = new Schema({
-    ID: String,
+const ArtifactSchema = new Schema({
+    name: String,
+    text: String,
     title: String,
-    subTitle: String,
-    content: String,
-    writer: String,
-    field: String
 }, {
     timestamps: true
 });
@@ -20,4 +17,4 @@ const ArticleSchema = new Schema({
 //     return this._id.toString();
 // })
 
-export const model = db.model("Article", ArticleSchema);
+export const model = db.model("Artifact", ArtifactSchema);
