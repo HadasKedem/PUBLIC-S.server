@@ -12,6 +12,7 @@ export class UsersController extends AbstractController {
         let router:Router = super.createRouter();
         router.post("/Users/login", this.performLogin)
         router.post("/Users/whoami", this.checkLoggedUser)
+        router.get("/Users/filter/:_partialWriterName", this.filterUserByPartOfName)
         return router;
     }
 
@@ -37,6 +38,29 @@ export class UsersController extends AbstractController {
                 })
         } else {
             res.status(401).json("No authorization token found in header")
+        }
+    }
+
+
+    public filterUserByPartOfName = (req:any, res:any) => {
+        let partialUserName = req.params["_partialWriterName"]
+        if (!partialUserName) {
+            res.status(404).json("Could not find user with given partial Name")
+        } else {
+            let partialMatchRegex = ('^' + partialUserName + '*').toString()
+            let nameFilter = {
+                $or: [
+                    { firstName: { $regex:  partialMatchRegex, $options:"i" } } ,
+                    { lastName: { $regex: partialMatchRegex, $options:"i"}}
+                ]
+            }
+            this.model.find(nameFilter, (err, artifacts) => {
+                if (err) {
+                    return res.status(400).json({error: err.error})
+                } else {
+                    return res.status(200).json(artifacts)
+                }
+            });
         }
     }
 }
