@@ -12,7 +12,7 @@ export class UsersController extends AbstractController {
         let router:Router = super.createRouter();
         router.post("/Users/login", this.performLogin)
         router.post("/Users/whoami", this.checkLoggedUser)
-        router.get("/Users/filter/:_partialWriterName", this.filterUserByPartOfName)
+        router.get("/Users/name/:_partialWriterName", this.filterUserByPartOfName)
         return router;
     }
 
