@@ -54,11 +54,11 @@ export class UsersController extends AbstractController {
                     { lastName: { $regex: partialMatchRegex, $options:"i"}}
                 ]
             }
-            this.model.find(nameFilter, (err, artifacts) => {
+            this.model.find(nameFilter, (err, user) => {
                 if (err) {
                     return res.status(400).json({error: err.error})
                 } else {
-                    return res.status(200).json(artifacts)
+                    return res.status(200).json(user)
                 }
             });
         }
