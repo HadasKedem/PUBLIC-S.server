@@ -14,7 +14,7 @@ export class ArticleController extends AbstractController {
     }
 
     public articleByField = async (req:any , res: any) => {
-        let filter = [{
+        let aggregator = [{
             $group: {
                 _id: "$field",
                 count: {
@@ -22,7 +22,7 @@ export class ArticleController extends AbstractController {
                 }
             }
         }]
-        await this.model.aggregate(filter, (err:any, answer:any) => {
+        await this.model.aggregate(aggregator, (err:any, answer:any) => {
             if (err) {
                 return res.status(400).json({error: err.error})
             } else {
