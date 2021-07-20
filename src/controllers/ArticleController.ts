@@ -35,11 +35,10 @@ export class ArticleController extends AbstractController {
 
     public filterArticleByTitle = async(req:any, res:any) => {
         let partialTitleName = req.params["_partialTitleName"]
-        let partialTitleMatchRegex = ('^' + partialTitleName + '*').toString()
         let titleFilter = {
             $or: [
-                {title: {$regex: partialTitleMatchRegex, $options: "i"}},
-                {subTitle: {$regex: partialTitleMatchRegex, $options: "i"}}
+                {title: {$regex: partialTitleName, $options: "i"}},
+                {subTitle: {$regex: partialTitleName, $options: "i"}}
             ]
         }
         this.model.find(titleFilter, (err, article) => {
@@ -54,12 +53,8 @@ export class ArticleController extends AbstractController {
 
     public filterArticleByWriter = (req:any, res:any) => {
         let partialWriterName = req.params["_partialWriterName"]
-        let partialWriterMatchRegex = ('^' + partialWriterName + '*').toString()
         let titleFilter = {
-            $or: [
-                {title: {$regex: partialWriterMatchRegex, $options: "i"}},
-                {subTitle: {$regex: partialWriterMatchRegex, $options: "i"}}
-            ]
+                writer: { $regex: partialWriterName, $options: "i" },
         }
         this.model.find(titleFilter, (err, article) => {
             if (err) {

@@ -44,16 +44,15 @@ export class UsersController extends AbstractController {
 
     public filterUserByPartOfName = (req:any, res:any) => {
         let partialUserName = req.params["_partialWriterName"]
-        let partialMatchRegex = ('^' + partialUserName + '*').toString()
         let nameFilter = {
             $or: [
-                {firstName: {$regex: partialMatchRegex, $options: "i"}},
-                {lastName: {$regex: partialMatchRegex, $options: "i"}}
+                {firstName: {$regex: partialUserName, $options: "i"}},
+                {lastName: {$regex: partialUserName, $options: "i"}}
             ]
         }
         this.model.find(nameFilter, (err, user) => {
             if (err) {
-                return res.status(400).json({error: err.error})
+                return res.status(400).json({error: err})
             } else {
                 return res.status(200).json(user)
             }
