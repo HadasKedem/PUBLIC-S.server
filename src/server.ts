@@ -9,10 +9,10 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const http = require('http');
 const app = express();
-//const cors = require('cors');
+const cors = require('cors');
 const scheduler = require("node-schedule")
 
-//app.options('**', cors());
+app.use(cors());
 
 // // Middlewares.
 app.use(bodyParser.json())
