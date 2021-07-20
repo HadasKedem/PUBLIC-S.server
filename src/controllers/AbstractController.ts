@@ -9,7 +9,7 @@ export abstract class AbstractController {
     private wss: any = null
     private clients = new Set()
 
-    protected constructor(private readonly modelName: string,
+    protected constructor(public readonly modelName: string,
                           model: mongoose.Model<any>) {
         this.modelName = modelName
         this.model = model
