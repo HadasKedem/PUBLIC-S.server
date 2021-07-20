@@ -35,46 +35,40 @@ export class ArticleController extends AbstractController {
 
     public filterArticleByTitle = async(req:any, res:any) => {
         let partialTitleName = req.params["_partialTitleName"]
-        if (!partialTitleName) {
-            res.status(404).json("Could not find article with given partial title")
-        } else {
-            let partialTitleMatchRegex = ('^' + partialTitleName + '*').toString()
-            let titleFilter = {
-                $or: [
-                    { title: { $regex:  partialTitleMatchRegex, $options:"i" } } ,
-                    { subTitle: { $regex: partialTitleMatchRegex, $options:"i"}}
-                ]
-            }
-            this.model.find(titleFilter, (err, article) => {
-                if (err) {
-                    return res.status(400).json({error: err.error})
-                } else {
-                    return res.status(200).json(article)
-                }
-            });
+        let partialTitleMatchRegex = ('^' + partialTitleName + '*').toString()
+        let titleFilter = {
+            $or: [
+                {title: {$regex: partialTitleMatchRegex, $options: "i"}},
+                {subTitle: {$regex: partialTitleMatchRegex, $options: "i"}}
+            ]
         }
+        this.model.find(titleFilter, (err, article) => {
+            if (err) {
+                return res.status(400).json({error: err.error})
+            } else {
+                return res.status(200).json(article)
+            }
+        });
+
     }
 
     public filterArticleByWriter = (req:any, res:any) => {
         let partialWriterName = req.params["_partialWriterName"]
-        if (!partialWriterName) {
-            res.status(404).json("Could not find article with given partial writer")
-        } else {
-            let partialWriterMatchRegex = ('^' + partialWriterName + '*').toString()
-            let titleFilter = {
-                $or: [
-                    { title: { $regex: partialWriterMatchRegex, $options:"i" } } ,
-                    { subTitle: { $regex: partialWriterMatchRegex, $options:"i"}}
-                ]
-            }
-            this.model.find(titleFilter, (err, article) => {
-                if (err) {
-                    return res.status(400).json({error: err.error})
-                } else {
-                    return res.status(200).json(article)
-                }
-            });
+        let partialWriterMatchRegex = ('^' + partialWriterName + '*').toString()
+        let titleFilter = {
+            $or: [
+                {title: {$regex: partialWriterMatchRegex, $options: "i"}},
+                {subTitle: {$regex: partialWriterMatchRegex, $options: "i"}}
+            ]
         }
+        this.model.find(titleFilter, (err, article) => {
+            if (err) {
+                return res.status(400).json({error: err.error})
+            } else {
+                return res.status(200).json(article)
+            }
+        });
+
     }
 
 
