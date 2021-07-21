@@ -8,7 +8,7 @@ const {ObjectId} = mongoose.Schema
 // AKA action
 const ArticleSchema = new Schema({
 
-    ID: String,
+    _id: ObjectId,
     title: String,
     subTitle: String,
     content: String,

@@ -3,9 +3,12 @@ const validator = require('validator');
 const bcrypt = require("bcrypt");
 const HASH_ROUNDS = 10;
 import mongoose, { Schema, HookNextFunction } from 'mongoose';
+// @ts-ignore
+const {ObjectId} = mongoose.Schema
 
 const usersSchema = new Schema({
 
+    _id: {type:ObjectId},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     email: {

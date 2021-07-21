@@ -82,12 +82,32 @@ export class ArticleController extends AbstractController {
 
     }
 
-    public filterArticleByWriter = (req:any, res:any) => {
+    public filterArticleByWriter = async (req: any, res: any) => {
         let partialWriterName = req.params["_partialWriterName"]
         let titleFilter = {
-                writer: { $regex: partialWriterName, $options: "i" },
+            writer: {$regex: partialWriterName, $options: "i"},
         }
-        this.model.find(titleFilter, (err, article) => {
+        let query = [
+            {
+                $lookup: {
+                    from: "Users",
+                    localField: "writer",
+                    foreignField: "_id",
+                    as: "writerInfo"
+                }
+            }, {
+                 $unwind: "$writerInfo"
+            }, {
+                $match: {
+                    $or: [
+                        {"writerInfo.firstName" : {$regex: partialWriterName, $options: "i"}},
+                        {"writerInfo.lastName" : {$regex: partialWriterName, $options: "i"}},
+                    ]
+                }
+            }
+
+        ]
+        await this.model.aggregate(query).exec( (err:any, article:any) => {
             if (err) {
                 return res.status(400).json({error: err.error})
             } else {
