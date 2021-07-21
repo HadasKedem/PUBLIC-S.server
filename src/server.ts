@@ -12,7 +12,7 @@ const app = express();
 const cors = require('cors');
 const scheduler = require("node-schedule")
 
-app.options('**', cors());
+app.use(cors());
 
 // // Middlewares.
 app.use(bodyParser.json())
