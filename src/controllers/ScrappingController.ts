@@ -1,8 +1,7 @@
 import {AbstractController} from "./AbstractController";
 import {model} from "../models/BreakingNews"
 import {Router} from "express";
-// @ts-ignore
-import AhoCorasick from 'ahocorasick';
+const AhoCorasick =require('ahocorasick');
 
 export class ScrappingController extends AbstractController {
     public constructor() {
