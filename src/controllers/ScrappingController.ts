@@ -1,10 +1,10 @@
 import {AbstractController} from "./AbstractController";
 import {model} from "../models/BreakingNews"
 import {Router} from "express";
+// @ts-ignore
+import AhoCorasick from 'ahocorasick';
 
 export class ScrappingController extends AbstractController {
-    private AhoCorasick = require('ahocorasick');
-
     public constructor() {
         super("BreakingNews", model);
     }
@@ -21,7 +21,7 @@ export class ScrappingController extends AbstractController {
             if(err) {
                 res.status(400).json(err)
             } else {
-                const ac = new this.AhoCorasick(words);
+                const ac = new AhoCorasick(words);
                 // @ts-ignore
                 res.status(200).json(documents.filter(d => ac.search(d.toObject().content.toLowerCase()).length > 0))
 
