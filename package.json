@@ -28,6 +28,7 @@
         "multer-azure": "^2.0.1",
         "multer-azure-storage": "^0.2.0",
         "multer-gridfs-storage": "^4.2.0",
+        "ahocorasick": "^1.0.2",
         "node-schedule": "^2.0.0",
         "nodemon": "^1.19.4",
         "puppeteer": "^9.1.1",
