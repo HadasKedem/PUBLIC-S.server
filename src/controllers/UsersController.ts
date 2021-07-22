@@ -3,6 +3,9 @@ import {model} from "../models/Users"
 import {Router} from "express";
 import {login, fetchUserByToken} from "../BL/AuthenticationHandler"
 
+const mongoose = require("mongoose");
+var User = mongoose.model("Users");
+
 export class UsersController extends AbstractController {
     public constructor() {
         super("Users", model);
@@ -12,6 +15,7 @@ export class UsersController extends AbstractController {
         let router:Router = super.createRouter();
         router.post("/Users/login", this.performLogin)
         router.post("/Users/whoami", this.checkLoggedUser)
+        router.get("/Users/getByEmail/:email", this.getByEmail)
         return router;
     }
 
@@ -39,4 +43,17 @@ export class UsersController extends AbstractController {
             res.status(401).json("No authorization token found in header")
         }
     }
+
+    public getByEmail = (req:any, res:any) => {
+        console.log('inside');
+        User.findOne({"email": req.params.email})
+          .then((result: any) => {
+            return res.status(200).send(result);
+          })
+          .catch((err: any) => {
+            return res
+              .status(400)
+              .send({ error: "Error. Probably Wrong id.", err: err });
+          });
+      };
 }
