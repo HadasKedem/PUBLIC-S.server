@@ -17,6 +17,7 @@ const usersSchema = new Schema({
         validate: [ validator.isEmail, 'invalid email' ],
     },
     password: { type: String, required: true },
+    city: { type: String, required: true },
     isAdmin: {type: Boolean, required: true, default: false},
     isWriter: {type: Boolean, required: true, default: false}
 }, {
