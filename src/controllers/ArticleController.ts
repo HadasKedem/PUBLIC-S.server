@@ -84,13 +84,11 @@ export class ArticleController extends AbstractController {
 
     public filterArticleByWriter = async (req: any, res: any) => {
         let partialWriterName = req.params["_partialWriterName"]
-        let titleFilter = {
-            writer: {$regex: partialWriterName, $options: "i"},
-        }
+
         let query = [
             {
                 $lookup: {
-                    from: "Users",
+                    from: "users",
                     localField: "writer",
                     foreignField: "_id",
                     as: "writerInfo"
