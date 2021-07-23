@@ -4,6 +4,8 @@ import {Router} from "express";
 import {login, fetchUserByToken} from "../BL/AuthenticationHandler"
 
 const mongoose = require("mongoose");
+const HyperLogLog = require('../util/HyperLogLog');
+
 var User = mongoose.model("Users");
 
 export class UsersController extends AbstractController {
@@ -16,6 +18,7 @@ export class UsersController extends AbstractController {
         router.post("/Users/login", this.performLogin)
         router.post("/Users/whoami", this.checkLoggedUser)
         router.get("/Users/getByEmail/:email", this.getByEmail)
+        router.get("/Users/q/differentCityCount", this.countCities)
         return router;
     }
 
@@ -56,4 +59,19 @@ export class UsersController extends AbstractController {
               .send({ error: "Error. Probably Wrong id.", err: err });
           });
       };
+
+    private countCities = (req:any, res:any) => {
+        this.model.find((err: any, documents: Document[]) => {
+            if(err) {
+                res.status(400).json(err)
+            } else {
+                const hll = HyperLogLog(12);
+                // @ts-ignore
+                documents.map(d => d.toObject().city).filter(c => c != null).map(c => HyperLogLog.hash(c)).forEach(hll.add)
+
+                res.status(200).json({"estimated": hll.count()})
+
+            }
+        })
+    }
 }
