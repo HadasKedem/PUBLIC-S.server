@@ -8,7 +8,7 @@ var User = mongoose.model("Users");
 
 export class UsersController extends AbstractController {
     public constructor() {
-        super("Users", model);
+        super("Users", model, user => user.isAdmin);
     }
 
     public createRouter():Router {

@@ -5,7 +5,7 @@ const AhoCorasick =require('ahocorasick');
 
 export class ScrappingController extends AbstractController {
     public constructor() {
-        super("BreakingNews", model);
+        super("BreakingNews", model, user => user.isAdmin);
     }
 
     createRouter(): Router {
