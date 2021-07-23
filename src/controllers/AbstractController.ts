@@ -19,6 +19,7 @@ export abstract class AbstractController {
         let rootPath = "/" + this.modelName
         let router = Router()
         router.get(rootPath, this.getAll)
+        router.get(rootPath+"/page/:page", this.getByPage)
         router.get(rootPath + "/:_id", this.getOne)
         router.post(rootPath, this.create)
         router.delete(rootPath + "/:_id", this.delete)
@@ -41,6 +42,17 @@ export abstract class AbstractController {
             }
         })
     }
+
+    public getByPage = async (req: any, res: any) => {
+        let page = Number(req.params["page"])
+        await this.model.find({}).skip(page * 10).limit(10).then(docs => {
+                res.status(200).json(docs)
+            },
+            err => {
+                res.status(400).json(err)
+            })
+    }
+
 
     public getOne = async (req: any, res: any) => {
         await this.model.findOne({_id: req.params["_id"]}, (err: any, artifact:any) => {
