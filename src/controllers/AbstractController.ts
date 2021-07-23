@@ -73,7 +73,7 @@ export abstract class AbstractController {
                         }
                     })
                 } else {
-                    res.status(401)
+                    res.status(401).send()
                 }
             }, () => {
                 res.status(401).send()
