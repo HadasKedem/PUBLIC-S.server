@@ -4,7 +4,7 @@ import {Router} from "express";
 
 export class ArticleController extends AbstractController {
     public constructor() {
-        super("Article", model)
+        super("Article", model, user => user.isWriter)
     }
 
     public createRouter(): Router {
@@ -58,5 +58,4 @@ export class ArticleController extends AbstractController {
             }
         })
     }
-
 }
