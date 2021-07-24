@@ -19,6 +19,7 @@ export class UsersController extends AbstractController {
         router.post("/Users/whoami", this.checkLoggedUser)
         router.get("/Users/getByEmail/:email", this.getByEmail)
         router.get("/Users/q/differentCityCount", this.countCities)
+        router.post("/Users/register", this.register)
         return router;
     }
 
@@ -59,7 +60,15 @@ export class UsersController extends AbstractController {
               .send({ error: "Error. Probably Wrong id.", err: err });
           });
       };
-
+    public register = async (req:any, res: any) => {
+        this.model.create(req.body, (err, user) => {
+            if (err) {
+                return res.status(400).json(err)
+            } else {
+                return res.status(201).json(user)
+            }
+        })
+    }
     private countCities = (req:any, res:any) => {
         this.model.find((err: any, documents: Document[]) => {
             if(err) {
