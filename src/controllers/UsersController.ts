@@ -21,6 +21,7 @@ export class UsersController extends AbstractController {
         router.get("/Users/q/differentCityCount", this.countCities)
         router.post("/Users/register", this.register)
         router.get("/Users/q/verbose", this.getAllWithReference)
+        router.get("/Users/q/countries", this.getAllCountries)
         return router;
     }
 
@@ -87,5 +88,17 @@ export class UsersController extends AbstractController {
 
     public getAllWithReference= async  (req: any, res:any) => {
         this.model.find({}).populate({path: "country"}).then(users => res.status(200).json(users), err => res.status(400).json(err))
+    }
+
+    public getAllCountries = async(req:any, res: any) => {
+        this.model.find({},{country:1, _id: 0})
+            .populate({path : "country"})
+            .then(
+                users => res.status(200).json(
+                    users.map(u => u.country)
+                        .filter(c => c!=null)
+                        .map(c => c.country)
+                        .filter((item, index, self)=> self.indexOf(item) == index))
+                , err => res.status(400).json(err))
     }
 }
