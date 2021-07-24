@@ -2,7 +2,9 @@ import {db} from "../DAL/database";
 const validator = require('validator');
 const bcrypt = require("bcrypt");
 const HASH_ROUNDS = 10;
-import mongoose, { Schema, HookNextFunction } from 'mongoose';
+import  {Schema, HookNextFunction} from 'mongoose';
+
+const {ObjectId} = require("mongoose").Schema
 
 const usersSchema = new Schema({
 
@@ -17,7 +19,7 @@ const usersSchema = new Schema({
         validate: [ validator.isEmail, 'invalid email' ],
     },
     password: { type: String, required: true },
-    city: { type: String, required: true },
+    country: {type: ObjectId, ref: "Country", required: true},
     isAdmin: {type: Boolean, required: true, default: false},
     isWriter: {type: Boolean, required: true, default: false}
 }, {

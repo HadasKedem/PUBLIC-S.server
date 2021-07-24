@@ -20,6 +20,7 @@ export class UsersController extends AbstractController {
         router.get("/Users/getByEmail/:email", this.getByEmail)
         router.get("/Users/q/differentCityCount", this.countCities)
         router.post("/Users/register", this.register)
+        router.get("/Users/q/verbose", this.getAllWithReference)
         return router;
     }
 
@@ -82,5 +83,9 @@ export class UsersController extends AbstractController {
 
             }
         })
+    }
+
+    public getAllWithReference= async  (req: any, res:any) => {
+        this.model.find({}).populate({path: "country"}).then(users => res.status(200).json(users), err => res.status(400).json(err))
     }
 }
