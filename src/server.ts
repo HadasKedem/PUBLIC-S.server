@@ -4,6 +4,7 @@ import {handlePull} from "./scrapping/HandlePull";
 import {ScrappingController} from "./controllers/ScrappingController";
 import {ArticleController} from "./controllers/ArticleController";
 import {UsersController} from "./controllers/UsersController";
+import {CountryController} from "./controllers/CountryController";
 
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -27,7 +28,7 @@ app.all('**', articleController.createRouter())
 articleController.startWebSocket(Number(process.env.ARTICLE_WEBSOCKET_PORT) || 14000)
 app.all('**', new ScrappingController().createRouter())
 app.all('**', new UsersController().createRouter())
-
+app.all("**", new CountryController().createRouter())
 
 
 process.env.TZ = "Asia/Jerusalem";
