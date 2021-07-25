@@ -25,6 +25,7 @@ export abstract class AbstractController {
         let router = Router()
         router.get(rootPath, this.getAll)
         router.get(rootPath+"/page/:page", this.getByPage)
+        router.get(rootPath + "/bydate/:day/:month/:year" , this.getByDate)
         router.get(rootPath + "/:_id", this.getOne)
         router.post(rootPath, this.create)
         router.delete(rootPath + "/:_id", this.delete)
@@ -37,6 +38,27 @@ export abstract class AbstractController {
         if (req.query.q) {
             searchQuery = {
                 $text: {$search: req.query.q}
+            }
+        }
+        await this.model.find(searchQuery, (err, artifacts) => {
+            if (err) {
+                return res.status(400).json({error: err.error})
+            } else {
+                return res.status(200).json(artifacts)
+            }
+        })
+    }
+    public getByDate = async (req: any, res: any) => {
+        let searchQuery = {}
+        let g = new Date(req.params.year, req.params.month , req.params.day)
+        let l  = new Date()
+         l.setDate(g.getDate() + 1);
+        if (req.params.day) {
+            searchQuery = {
+                createdAt: {
+                $gte: g , 
+                $lte: l
+               }
             }
         }
         await this.model.find(searchQuery, (err, artifacts) => {
