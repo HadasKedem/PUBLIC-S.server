@@ -63,7 +63,10 @@ export class UsersController extends AbstractController {
           });
       };
     public register = async (req:any, res: any) => {
-        this.model.create(req.body, (err, user) => {
+        let user = req.body;
+        user.isAdmin = false
+        user.isWriter = false
+        this.model.create(user, (err, user) => {
             if (err) {
                 return res.status(400).json(err)
             } else {
