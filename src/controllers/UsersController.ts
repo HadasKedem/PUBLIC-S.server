@@ -18,7 +18,7 @@ export class UsersController extends AbstractController {
         router.post("/Users/login", this.performLogin)
         router.post("/Users/whoami", this.checkLoggedUser)
         router.get("/Users/getByEmail/:email", this.getByEmail)
-        router.get("/Users/q/differentCityCount", this.countCities)
+        router.get("/Users/q/differentCountryCount", this.countCountries)
         router.post("/Users/register", this.register)
         router.get("/Users/q/verbose", this.getAllWithReference)
         router.get("/Users/q/countries", this.getAllCountries)
@@ -71,14 +71,14 @@ export class UsersController extends AbstractController {
             }
         })
     }
-    private countCities = (req:any, res:any) => {
+    private countCountries = (req:any, res:any) => {
         this.model.find((err: any, documents: Document[]) => {
             if(err) {
                 res.status(400).json(err)
             } else {
                 const hll = HyperLogLog(12);
                 // @ts-ignore
-                documents.map(d => d.toObject().coutnry).filter(c => c != null).map(c => HyperLogLog.hash(c)).forEach(hll.add)
+                documents.map(d => d.toObject().country).filter(c => c != null).map(c => HyperLogLog.hash(c.toString())).forEach(hll.add)
 
                 res.status(200).json({"estimated": hll.count()})
 
