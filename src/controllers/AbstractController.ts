@@ -50,7 +50,7 @@ export abstract class AbstractController {
 
     public getByPage = async (req: any, res: any) => {
         let page = Number(req.params["page"])
-        await this.model.find({}).skip(page * 10).limit(10).then(docs => {
+        await this.model.find({}).sort({ _id: -1 }).skip(page * 10).limit(10).then(docs => {
                 res.status(200).json(docs)
             },
             err => {
@@ -123,7 +123,7 @@ export abstract class AbstractController {
     public update = async (req: any, res: any) => {
         fetchUserByToken(req.headers.authorization).then(user => {
             if(this.modifyValidator(user)){
-                this.model.findOneAndUpdate({_id: req.params["_id"]}, req.body, {
+                this.model.findOneAndUpdate({_id: req.params["_id"]}, { $set: req.body }, {
                     returnOriginal: false,
                     useFindAndModify: false
                 }, (err, doc) => {

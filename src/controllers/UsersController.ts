@@ -78,7 +78,7 @@ export class UsersController extends AbstractController {
             } else {
                 const hll = HyperLogLog(12);
                 // @ts-ignore
-                documents.map(d => d.toObject().city).filter(c => c != null).map(c => HyperLogLog.hash(c)).forEach(hll.add)
+                documents.map(d => d.toObject().coutnry).filter(c => c != null).map(c => HyperLogLog.hash(c)).forEach(hll.add)
 
                 res.status(200).json({"estimated": hll.count()})
 
