@@ -10,7 +10,7 @@ const ArticleSchema = new Schema({
     title: String,
     subTitle: String,
     content: String,
-    writer: String,
+    writer: {type: Schema.Types.ObjectId, ref: "Users", required: true},
     field: String
 }, {
     timestamps: true
